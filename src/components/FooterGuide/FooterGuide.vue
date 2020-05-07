@@ -55,7 +55,7 @@ export default {
     bottom -2px
     background-color #fff
     width 100%
-    height 100px
+    height 98px
     display flex
     border-top 1px solid #ccc
     .guide_item
@@ -67,40 +67,40 @@ export default {
         margin 5px
         color #666
         &.on
-            color #DD1A21
+          color #DD1A21
         .tab
             div
-                font-size 24px
-                text-align center
+              font-size 24px
+              text-align center
             i
-                display block
-                width 40px
-                height 40px
-                margin 5px auto
-                background-size 40px 40px
+              display block
+              width 40px
+              height 40px
+              margin 5px auto
+              background-size 40px 40px
             .index
                 background-image url('./images/tab-home.png')
                 &.on
-                    background-image url('./images/tab-home-current.png')
+                  background-image url('./images/tab-home-current.png')
             .cate
                 background-image url('./images/tab-cate.png')
                 &.on
-                    background-image url('./images/tab-cate-current.png')
+                  background-image url('./images/tab-cate-current.png')
             .topic
                 background-image url('./images/bg.webp')
                 background-size cover
                 background-position  0px -335px
                 &.on
-                    background-image url('./images/bg.webp')
-                    background-size cover
-                    background-position  0px -285px
+                  // background-image url('./images/bg.webp')
+                  // background-size cover
+                  background-position  0px -285px
             .cart
                 background-image url('./images/tab-cart.png') 
                 &.on
-                    background-image url('./images/tab-cart-current.png') 
+                  background-image url('./images/tab-cart-current.png') 
             .my
                 background-image url('./images/tab-my.png') 
                 &.on
-                    background-image url('./images/tab-my-current.png') 
+                  background-image url('./images/tab-my-current.png') 
 
 </style>

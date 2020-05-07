@@ -28,5 +28,17 @@ module.exports = {
                 'store': resolve('src/store'),
             }
         }
+    },
+    devServer:{
+        open:true,
+        proxy:{
+            '/3001': {
+                target: 'http://localhost:3001',
+                changeOrigin: true,
+                pathRewrite:{
+                    "^/3001":""
+                }
+            }
+        }
     }
 }
