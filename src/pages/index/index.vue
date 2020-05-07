@@ -14,84 +14,56 @@
     <!-- 导航区域 -->
     <div class="navContainer" ref="navNode">
       <div class="headerNav">
-        <div class="navItem" > 推荐</div>
+        <div class="navItem activeClass"> 推荐</div>
         <div class="navItem" v-for="(item,index) in navList" :key="index">{{item.text}}</div>
       </div>
     </div>
 
-    <!-- 轮播图 -->
-    <div class="swiper-container">
-        <div class="swiper-wrapper">
-            <!-- <div class="swiper-slide" v-for="(item,index) in swiperList" :key="index">
-              <img :src="item.picUrl" alt="">
-            </div> -->
-            <div class="swiper-slide" >
-              <img src="https://yanxuan.nosdn.127.net/84d82137e854e58bf26791db3ba203b8.jpg?type=webp&imageView&quality=75&thumbnail=750x0" alt="">
-            </div>
-             <div class="swiper-slide" >
-              <img src="https://yanxuan.nosdn.127.net/efe5bb71fd6787d9c5f5b051eb607666.jpg?type=webp&imageView&quality=75&thumbnail=750x0" alt="">
-            </div>
-             <div class="swiper-slide" >
-              <img src="https://yanxuan.nosdn.127.net/b7f94a107096c60038eba24f542d62c5.jpg?type=webp&imageView&quality=75&thumbnail=750x0" alt="">
-            </div>
-             <div class="swiper-slide" >
-              <img src="https://yanxuan.nosdn.127.net/a16ac18c02bb26755dbcac1911631aa0.jpg?type=webp&imageView&quality=75&thumbnail=750x0" alt="">
-            </div>
-             <div class="swiper-slide" >
-              <img src="http://yanxuan-miaobi.nos-jd.163yun.com/1685001_1_1_wap_9944f32cae294bd124b5bd8ebf371fc4.jpg?type=webp&imageView&quality=75&thumbnail=750x0" alt="">
-            </div>
-        </div>
-        <!-- 如果需要分页器 -->
-        <div class="swiper-pagination"></div>
+    <div class="content" ref="contentNode">
+      <Recommend></Recommend>
     </div>
 	</div>
 </template>
 
 <script>
 import http from '../../http/index'
-import BScroll from 'better-scroll'
-import { Swipe, SwipeItem } from 'vant';
-import Swiper from 'swiper';    
+import BScroll from 'better-scroll'  
+import Recommend from '../../components/recommend/recommend'
 export default {
     name:'index',
     data() {
       return {
         navIndex:0,
         navList:[],
-        swiperList:[]
+        indexData:{}
       }
     },
     components:{
-       [Swipe.name]:Swipe,
-       [SwipeItem.name]:SwipeItem
+       "Recommend":Recommend
     },
     async mounted() {
       let indexData  = await http.index.getIndexData()
       console.log(indexData)
+      this.indexData = indexData
       this.navList = indexData.kingKongModule.kingKongList
-      this.swiperList = indexData.focusList
       // console.log(this.$refs)
       this.$nextTick(()=>{
           new BScroll(this.$refs.navNode,{
-            scrollX:true
+            scrollX:true,
+            click: true
+          })
+          new BScroll(this.$refs.contentNode,{
+            // scrollX:true,
+            click: true
           })
       })
-      let mySwiper = new Swiper ('.swiper-container', {
-        loop: true, // 循环模式选项
-        autoplay:true,
-        // 如果需要分页器
-        pagination: {
-          el: '.swiper-pagination',
-        },
-        
-      })        
-
     },
 }
 </script>
 
 <style lang="stylus" scoped>
 #indexContainer
+    overflow auto
     .header 
       display flex
       height 60px
@@ -142,28 +114,25 @@ export default {
       .headerNav
         display inline-flex
         height 100%
+        padding 0 30px
         .navItem
+          position relative
           white-space nowrap
           font-size 30px
           padding 0 16px
           line-height 60px
-    .swiper-container
-      height 296px
-      width 100%
-      .swiper-wrapper
-        height 296px
-        display inline-flex
-        .swiper-slide
-          width 750px
-          height 100%
-          img 
+          &.activeClass:after
+            content ''
+            height 2px
             width 100%
-            height 100%
-      .swiper-pagination
-        height 20px
-          
-
-
+            position absolute
+            bottom 1px
+            left 0
+            background #BB2C08	
+    .content
+      height 1094px
+      overflow hidden
+      
 
 
 
