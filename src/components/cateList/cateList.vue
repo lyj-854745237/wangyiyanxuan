@@ -42,23 +42,63 @@
                 </div>
             </div>
         </div>
-        <div class="indexFloor categoryHotSell"> 
-            <div class="title">类目热销榜</div>
-            <div class="content"></div>
+        <div class="categoryHotSell" v-if="indexData.categoryHotSellModule"> 
+            <div class="title">{{indexData.categoryHotSellModule.title}}</div>
+            <div class="content">
+                <div class="top">
+                    <div class="item1 item">
+                        <div class="name">{{categoryList[0].categoryName}}</div>
+                        <div class="imgWrap">
+                            <img :src="categoryList[0].picUrl" alt="">
+                        </div>
+                    </div>
+                    <div class="item2 item">
+                        <div class="name">{{categoryList[1].categoryName}}</div>
+                        <div class="imgWrap">
+                            <img :src="categoryList[1].picUrl" alt="">
+                        </div>
+                    </div>
+                </div>
+                <div class="bottom">
+                    <div class="item-b" v-for="(item,index) in categoryListBottom" :key="index">
+                        <div class="name">{{item.categoryName}}</div>
+                        <div class="imgWrap">
+                            <img :src="item.picUrl" alt="">
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </template>
 
 <script>
+import http from '../../http/index'
 export default {
-    name:'CateList'
+    name:'CateList',
+    data() {
+      return {
+        indexData:{},
+        categoryList:[]
+      }
+    },
+    async mounted() {
+        let indexData  = await http.index.getIndexData()
+        this.indexData = indexData
+        this.categoryList = indexData.categoryHotSellModule.categoryList
+    },
+    computed: {
+        categoryListBottom(){
+            return this.categoryList.splice(2)
+        }
+    },
 }
 </script>
 
 <style lang="stylus" scoped>
     .cateListContainer
         background #eeeeee
-        overflow hidden
+        border 1px solid #eee
         .newItem
             margin 20px 0
             background #fff
@@ -160,17 +200,73 @@ export default {
                             background #CBB693
                             border-radius 6px
                             padding 0 6px
-            .indexFloor
-                margin 20px 0
-                background #fff
-                .title
-                    line-height 90px
-                    height 90px
-                    // text-align center
-                    font-size 32px
-                .content
-                    padding 0 20px 30px 30px
-                    display flex    
+        .categoryHotSell
+            margin 20px 0
+            background #fff
+            .title
+                line-height 90px
+                height 90px
+                font-size 32px
+                padding 0 30px
+            .content
+                padding 0 20px 30px 30px
+                .top
+                    display flex
+                    .item
+                        background #F9F3E4
+                        flex 1
+                        display flex
+                        margin-bottom 10px
+                        .imgWrap
+                            width 200px
+                            height 200px
+                            img 
+                                width 200px
+                                height 200px
+                        .name
+                            width 140px
+                            height 100%
+                            text-align center
+                            padding-top  70px
+                            box-sizing border-box
+                            font-size 28px
+                            position relative
+                            &:after
+                                content ''
+                                position absolute
+                                left 24px
+                                bottom 80px
+                                width  48px
+                                height 4px
+                                background #333
+
+                    .item2
+                        background #EBEFF6
+                        margin-left 10px
+                .bottom
+                    display flex
+                    flex-wrap wrap
+                    .item-b
+                        flex 1
+                        background #F5F5F5
+                        box-sizing border-box
+                        margin-right 10px
+                        margin-bottom 10px
+                        padding-top 10px 
+                        &:nth-of-type(4) 
+                            margin-right 0
+                        &:nth-of-type(8) 
+                            margin-right 0
+                        .imgWrap
+                            width 120px
+                            height 120px
+                            margin-left 23px
+                            img 
+                                width 100%
+                                height 100%
+                        .name
+                            text-align center
+
 
 
 

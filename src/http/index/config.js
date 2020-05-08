@@ -6,6 +6,20 @@ export default{
             method:'get',
             corsUrl:"/3001"
         },
-        
+        getCateGoryData:{
+            url:'/getCateGoryData',
+            method:'get',
+            corsUrl:"/3001"
+        },
+        cateNavDatas:{
+            url:'/cateNavDatas',
+            method:'get',
+            corsUrl:"/3001"
+        },
+        cateLists:{
+            url:'/cateLists',
+            method:'get',
+            corsUrl:"/3001"
+        },
     },
 }

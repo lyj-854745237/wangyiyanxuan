@@ -14,13 +14,23 @@
     <!-- 导航区域 -->
     <div class="navContainer" ref="navNode">
       <div class="headerNav">
-        <div class="navItem activeClass"> 推荐</div>
-        <div class="navItem" v-for="(item,index) in navList" :key="index">{{item.text}}</div>
+        <div 
+          class="navItem " 
+          @click="changeNavId(0,0)"
+          :class="{activeClass: navId === 0}"
+        > 推荐</div>
+        <div class="navItem" 
+             v-for="(item,index) in navList" 
+             :key="index"
+             @click="changeNavId((index+1),item.L1Id)"
+             :class="{activeClass: navId === (index+1)}"
+        >{{item.text}}</div>
       </div>
     </div>
 
     <div class="content" ref="contentNode">
-      <Recommend></Recommend>
+      <Recommend v-if="navId === 0"></Recommend>
+      <CateGorys v-else :navIndex = 'navIndex'></CateGorys>
     </div>
 	</div>
 </template>
@@ -29,31 +39,37 @@
 import http from '../../http/index'
 import BScroll from 'better-scroll'  
 import Recommend from '../../components/recommend/recommend'
+import CateGorys from '../../components/cateGorys/cateGorys'
 export default {
     name:'index',
     data() {
       return {
+        navId:0,
         navIndex:0,
         navList:[],
         indexData:{}
       }
     },
     components:{
-       "Recommend":Recommend
+       "Recommend":Recommend,
+       "CateGorys":CateGorys
+    },
+    methods: {
+      changeNavId(navId, navIndex){
+        // 如果是 原来是id就不用改变了
+        // console.log(this.navId,this.navIndex)
+        (navId !== this.navId) && (this.navId = navId, this.navIndex = navIndex)
+			},
     },
     async mounted() {
       let indexData  = await http.index.getIndexData()
-      console.log(indexData)
+      // console.log(indexData)
       this.indexData = indexData
       this.navList = indexData.kingKongModule.kingKongList
       // console.log(this.$refs)
       this.$nextTick(()=>{
-          new BScroll(this.$refs.navNode,{
+       this.wrap = new BScroll(this.$refs.navNode,{
             scrollX:true,
-            click: true
-          })
-          new BScroll(this.$refs.contentNode,{
-            // scrollX:true,
             click: true
           })
       })
@@ -63,7 +79,6 @@ export default {
 
 <style lang="stylus" scoped>
 #indexContainer
-    overflow auto
     .header 
       display flex
       height 60px
@@ -111,6 +126,7 @@ export default {
         box-sizing  border-box
     .navContainer
       height 60px
+      overflow hidden
       .headerNav
         display inline-flex
         height 100%
@@ -131,7 +147,7 @@ export default {
             background #BB2C08	
     .content
       height 1094px
-      overflow hidden
+      overflow auto
       
 
 

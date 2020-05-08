@@ -89,11 +89,11 @@ export default {
             .topic
                 background-image url('./images/bg.webp')
                 background-size cover
-                background-position  0px -335px
+                background-position  0px -350px
                 &.on
                   // background-image url('./images/bg.webp')
                   // background-size cover
-                  background-position  0px -285px
+                  background-position  0px -300px
             .cart
                 background-image url('./images/tab-cart.png') 
                 &.on
