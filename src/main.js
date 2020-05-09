@@ -4,6 +4,7 @@ import App from './App.vue'
 import 'lib-flexible/flexible'
 // 路由
 import router from './router/index'
+import 'vant/lib/index.css';
 
 Vue.config.productionTip = false
 

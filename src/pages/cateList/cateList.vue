@@ -2,7 +2,7 @@
 	<div class="categoryContainer">
 		<!-- 头部区域 -->
 		<div class="header">
-			<div class="searchInput">
+			<div class="searchInput" @click="$router.replace('/Search')">
 				<i class="iconfont icon-sousuo"></i>
 				<!-- <input type="text" value="" placeholder="搜索商品"  class="input"/> -->
         		<span class="text">搜索商品, 共26223款好物</span>
@@ -21,9 +21,10 @@
 			</div>
 			<div class="right" ref="rigthNode">
 				<div class="proList" v-if="categoryObj">
-					<img class="cateImg" src="https://yanxuan.nosdn.127.net/a41ddf5b8d7921d5d09987022dd71cac.jpg?quality=75&type=webp&imageView&thumbnail=0x196" mode=""/>
-					<div  class='proItem' v-for='(item, index) in categoryObj.categoryList' :key='index'>
-						<img :src="item.wapBannerUrl" mode=""/>
+					<img 
+					class="cateImg" src="https://yanxuan.nosdn.127.net/a41ddf5b8d7921d5d09987022dd71cac.jpg?quality=75&type=webp&imageView&thumbnail=0x196" mode=""/>
+					<div  class='proItem' v-for='(item, index) in categoryObj.categoryList?categoryObj.categoryList:categoryObj.subCateList' :key='index'>
+						<img :src="item.BannerUrl?item.BannerUrl:item.wapBannerUrl" mode=""/>
 						<p>{{item.name}}</p>
 					</div>
 				</div>
@@ -60,8 +61,6 @@ export default {
 		// console.log(this.categoryList)
 		this.navIndex = this.categoryList[0].id
 		this.rigthData = await http.index.cateLists()
-		// console.log(this.rigthData)
-		// console.log(this.rigthData[0].categoryList)
 		this.$nextTick(()=>{
 			new BScroll(this.$refs.rigthNode,{
 				scrollY:true,
@@ -144,15 +143,18 @@ export default {
 						height 190px
 						margin 20px auto
 					.proItem 
-						width 33%
+						width 30%
 						display flex 
 						align-items center
 						flex-direction column
-						image 
-							width 90% 
+						margin-left 20px
+						img 
+							width 144px
 							height 144px
 						p
 							font-size 24px
 							text-align center
+							height 72px
+							line-height 36px
 
 </style>

@@ -4,6 +4,7 @@ import Topic from '../pages/topic/topic.vue'
 import Cart from '../pages/cart/cart.vue'
 import Personal from '../pages/personal/personal.vue'
 import Login from '../pages/login/login.vue'
+import Search from '../pages/search/search.vue'
 
 export default [
     {path:"/Index",component:Index},
@@ -12,5 +13,6 @@ export default [
     {path:"/Cart",component:Cart},
     {path:"/Personal",component:Personal},
     {path:"/Login",component:Login},
+    {path:"/Search",component:Search},
     {path:"/",redirect:"/Index"}
 ]

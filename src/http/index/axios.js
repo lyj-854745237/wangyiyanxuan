@@ -3,7 +3,7 @@ import config from './config'
 
 const axiosIns = axios.create({
     baseURL:config.baseUrl || '',
-    timeout:config.timeout || 5000
+    timeout:config.timeout || 5000,
 })
 axiosIns.interceptors.request.use(
     (config)=>{

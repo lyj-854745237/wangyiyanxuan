@@ -3,7 +3,7 @@
 		<!-- 头部 -->
 		<div class="header">
 			<img class="logo" src="./images/logo.png"/>
-			<div class="searchInput">
+			<div class="searchInput"   @click="$router.replace('/Search')">
 				<i class="iconfont icon-sousuo"></i>
 				<!-- <input type="text" value="" placeholder="搜索商品"  class="input"/> -->
         <span class="text">搜索商品, 共26223款好物</span>
@@ -13,9 +13,9 @@
 
     <!-- 导航区域 -->
     <div class="navContainer" ref="navNode">
-      <div class="headerNav">
+      <div class="headerNav" >
         <div 
-          class="navItem " 
+          class="navItem" 
           @click="changeNavId(0,0)"
           :class="{activeClass: navId === 0}"
         > 推荐</div>
@@ -30,7 +30,7 @@
 
     <div class="content" ref="contentNode">
       <Recommend v-if="navId === 0"></Recommend>
-      <CateGorys v-else :navIndex = 'navIndex'></CateGorys>
+      <CateGorys v-else :navIndex = 'navIndex' :indexData = 'indexData'></CateGorys>
     </div>
 	</div>
 </template>
@@ -56,9 +56,13 @@ export default {
     },
     methods: {
       changeNavId(navId, navIndex){
-        // 如果是 原来是id就不用改变了
-        // console.log(this.navId,this.navIndex)
         (navId !== this.navId) && (this.navId = navId, this.navIndex = navIndex)
+
+        // let targetLi = this.$refs.nav && this.$refs.nav.children[navId];
+        // this.wrap && this.wrap.scrollToElement(targetLi,300)
+
+
+        this.wrap && this.wrap.scrollToElement(`.headerNav > .navItem:nth-of-type(${navId})`,300)
 			},
     },
     async mounted() {
@@ -148,7 +152,6 @@ export default {
     .content
       height 1094px
       overflow auto
-      
 
 
 

@@ -21,5 +21,20 @@ export default{
             method:'get',
             corsUrl:"/3001"
         },
+        getIndexCateListData:{
+            url:'/getIndexCateListData',
+            method:'get',
+            corsUrl:"/3001"
+        },
+        getKeyWord:{
+            url:'/xhr/search/init.json',
+            method:'get',
+            corsUrl:"/api"
+        },
+        getKeyWordList:{
+            url:'xhr/search/searchAutoComplete.json',
+            method:'get',
+            corsUrl:"/api"
+        }
     },
 }

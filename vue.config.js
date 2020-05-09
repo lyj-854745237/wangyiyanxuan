@@ -8,6 +8,7 @@ const px2rem = require('postcss-px2rem')
 const postcss = px2rem({
     remUnit: 75   
 })
+
 module.exports = {
     runtimeCompiler: true,
     lintOnSave: false, 
@@ -15,7 +16,13 @@ module.exports = {
         loaderOptions: {
             postcss: {
                 plugins: [
-                    postcss
+                    postcss,
+                    // vant的适配
+                    px2rem({
+                        remUnit: 75,
+                        propList: ['*'],
+                    })
+            
                 ]
             }
         }
@@ -38,7 +45,17 @@ module.exports = {
                 pathRewrite:{
                     "^/3001":""
                 }
+            },
+            '/api': {
+                target: 'https://m.you.163.com',
+                changeOrigin: true,
+                secure:false,
+                pathRewrite:{
+                    "^/api":""
+                }
             }
-        }
+        },
+        
     }
 }
+
