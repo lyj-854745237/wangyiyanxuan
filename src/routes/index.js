@@ -7,11 +7,16 @@ import Login from '../pages/login/login.vue'
 import Search from '../pages/search/search.vue'
 
 export default [
-    {path:"/Index",component:Index},
-    {path:"/CateList",component:CateList},
-    {path:"/Topic",component:Topic},
-    {path:"/Cart",component:Cart},
-    {path:"/Personal",component:Personal},
+    {path:"/Index",component:Index,meta:{showFooter:true}},
+    {path:"/CateList",component:CateList,meta:{showFooter:true}},
+    {
+        path:"/Topic",
+        component:Topic,
+        name:"topic",
+        meta:{showFooter:true}
+    },
+    {path:"/Cart",component:Cart,meta:{showFooter:true}},
+    {path:"/Personal",component:Personal,meta:{showFooter:false}},
     {path:"/Login",component:Login},
     {path:"/Search",component:Search},
     {path:"/",redirect:"/Index"}

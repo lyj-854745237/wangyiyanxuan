@@ -1,30 +1,32 @@
 <template>
   <div id="indexContainer">
-		<!-- 头部 -->
-		<div class="header">
-			<img class="logo" src="./images/logo.png"/>
-			<div class="searchInput"   @click="$router.replace('/Search')">
-				<i class="iconfont icon-sousuo"></i>
-				<!-- <input type="text" value="" placeholder="搜索商品"  class="input"/> -->
-        <span class="text">搜索商品, 共26223款好物</span>
-			</div>
-			<div class="btn" >登录</div>
-		</div>
+		<div class="headerWrap">
+        <!-- 头部 -->
+      <div class="header">
+        <img class="logo" src="./images/logo.png"/>
+        <div class="searchInput"   @click="$router.push('/Search')">
+          <i class="iconfont icon-sousuo"></i>
+          <!-- <input type="text" value="" placeholder="搜索商品"  class="input"/> -->
+          <span class="text">搜索商品, 共26223款好物</span>
+        </div>
+        <div class="btn" >登录</div>
+      </div>
 
-    <!-- 导航区域 -->
-    <div class="navContainer" ref="navNode">
-      <div class="headerNav" >
-        <div 
-          class="navItem" 
-          @click="changeNavId(0,0)"
-          :class="{activeClass: navId === 0}"
-        > 推荐</div>
-        <div class="navItem" 
-             v-for="(item,index) in navList" 
-             :key="index"
-             @click="changeNavId((index+1),item.L1Id)"
-             :class="{activeClass: navId === (index+1)}"
-        >{{item.text}}</div>
+      <!-- 导航区域 -->
+      <div class="navContainer" ref="navNode">
+        <div class="headerNav" >
+          <div 
+            class="navItem" 
+            @click="changeNavId(0,0)"
+            :class="{activeClass: navId === 0}"
+          > 推荐</div>
+          <div class="navItem" 
+              v-for="(item,index) in navList" 
+              :key="index"
+              @click="changeNavId((index+1),item.L1Id)"
+              :class="{activeClass: navId === (index+1)}"
+          >{{item.text}}</div>
+        </div>
       </div>
     </div>
 
@@ -41,6 +43,12 @@ import BScroll from 'better-scroll'
 import Recommend from '../../components/recommend/recommend'
 import CateGorys from '../../components/cateGorys/cateGorys'
 export default {
+     metaInfo:{
+        meta:[
+            {chartset:'utf-8'},
+            {name:'viewport',content:'width=device-width, initial-scale=0.5, maximum-scale=0.5, user-scalable=0'}
+        ]
+    },
     name:'index',
     data() {
       return {
@@ -149,6 +157,7 @@ export default {
             bottom 1px
             left 0
             background #BB2C08	
+    
     .content
       height 1094px
       overflow auto

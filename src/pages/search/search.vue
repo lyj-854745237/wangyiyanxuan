@@ -7,6 +7,7 @@
                 show-action
                 left-icon = 'none'
                 @input="onInput"
+                @cancel = 'onCancel'
             />
             <i class="iconfont icon-cc-search"></i>
       </div>
@@ -65,6 +66,10 @@ export default {
                     this.isCanShow = true
                 },1000)
             }
+        },
+        onCancel(){
+            // console.log(this.$router.go(),"-----")
+            this.$router.go(-1)
         }
     },
     async mounted() { 

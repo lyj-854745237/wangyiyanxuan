@@ -2,7 +2,7 @@
 	<div class="categoryContainer">
 		<!-- 头部区域 -->
 		<div class="header">
-			<div class="searchInput" @click="$router.replace('/Search')">
+			<div class="searchInput" @click="$router.push('/Search')">
 				<i class="iconfont icon-sousuo"></i>
 				<!-- <input type="text" value="" placeholder="搜索商品"  class="input"/> -->
         		<span class="text">搜索商品, 共26223款好物</span>
@@ -37,6 +37,12 @@
 import http from '../../http/index'
 import BScroll from 'better-scroll'
 export default {
+	metaInfo:{
+        meta:[
+            {chartset:'utf-8'},
+            {name:'viewport',content:'width=device-width, initial-scale=0.5, maximum-scale=0.5, user-scalable=0'}
+        ]
+    },
 	data() {
 		return {
 			navIndex:0,

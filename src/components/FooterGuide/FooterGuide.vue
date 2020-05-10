@@ -93,7 +93,7 @@ export default {
                 &.on
                   // background-image url('./images/bg.webp')
                   // background-size cover
-                  background-position  0px -300px
+                  background-position  0px -285px
             .cart
                 background-image url('./images/tab-cart.png') 
                 &.on
