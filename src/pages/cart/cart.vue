@@ -40,7 +40,7 @@ export default {
 .cartContainer
     position relative
     background #f4f4f4
-    height 100%
+    height 1234px
     .title
         font-size 32px
         line-height 80px

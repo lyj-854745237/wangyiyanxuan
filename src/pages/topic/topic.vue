@@ -21,54 +21,24 @@
                 <div class="text">严选好物 用心生活</div>
                 <img class="bg" src="./images/topic_title_bg.png" alt="">
             </div>
-            <div class="swipertap">
-                <!-- <div class="swiper-container">
-                    <div class="swiper-wrapper">
-                        <div class="swiper-slide" v-for="(item,index) in navList" :key="index">
-                            <div class="img">
-                                <img :src="item.picUrl" alt="">
-                            </div>
-                            <div class="detail">
-                                <span>{{item.mainTitle}}</span>
-                                <span>{{item.viceTitle}}</span>
-                            </div>
+            <div class="tabWrap">
+                <div class="swipertap">
+                    <div class="swiperItem" v-for="(item,index) in navList" :key="index">
+                        <div class="img">
+                            <img :src="item.picUrl" alt="">
                         </div>
-                        <div class="swiper-slide">Slide 2</div>
-                        <div class="swiper-slide">Slide 3</div>
-                    </div>
-                   
-                    <div class="swiper-pagination"></div>
-                </div> -->
-                <div class="swiper-slide" v-for="(item,index) in navList" :key="index">
-                    <div class="img">
-                        <img :src="item.picUrl" alt="">
-                    </div>
-                    <div class="detail">
-                        <span>{{item.mainTitle}}</span>
-                        <span>{{item.viceTitle}}</span>
+                        <div class="detail">
+                            <span>{{item.mainTitle}}</span>
+                            <span>{{item.viceTitle}}</span>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
         <!-- 瀑布流 -->
-        <div class="water">
-            <div class="container-water-fall">
-                <waterfall :col='col' :data="initData"  @loadmore="loadmore"  :lineGap="0">
-                    <div class="cell-item" v-for="(item,index) in initData" :key="index">
-                        <div v-for="(Iitem,index) in item.topics" :key="index" class="item">
-                            <img :src="Iitem.newAppBanner?Iitem.newAppBanner:Iitem.picUrl" class="banner">
-                            <div class="item-body">
-                                <p>{{Iitem.title}}</p>
-                                <div class="desc">
-                                    <img :src="Iitem.avatar"   class="avatar">
-                                    <p>{{Iitem.nickname}}</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </waterfall>
-            </div>
+        <div ref="scroll">
+            <WaterFall ></WaterFall>
         </div>
     </div>
 </template>
@@ -76,9 +46,8 @@
 <script>
 import Swiper from 'swiper';
 import http from '../../http/index'
-import Waterfall from 'vue-waterfall/lib/waterfall'
-import WaterfallSlot from 'vue-waterfall/lib/waterfall-slot'
-import waterfall from 'vue-waterfall2'
+import WaterFall from '../../components/WaterFall/Waterfall'
+import BScroll from 'better-scroll'
 export default {
     metaInfo:{
         meta:[
@@ -89,39 +58,31 @@ export default {
     data() {
         return {
             navList:[],
-            initData:[],
-            col:2,
         }
     },
-    components: {
-        Waterfall,
-        WaterfallSlot
-    },
-    methods: {
-        scroll(scrollData){
-            console.log(scrollData)
-        },
-        switchCol(col){
-            this.col = col
-            console.log(this.col)
-        },
-	      loadmore(index){
-	            this.data = this.data.concat(this.data)
-	      }
+    components:{
+        "WaterFall":WaterFall
     },
     async mounted() {
+        console.log(document.body.clientWidth)
+        console.log(document.body.clientHeight)
         var mySwiper = new Swiper ('.swiper-container', {
-            // 如果需要分页器
             pagination: {
                 el: '.swiper-pagination',
-                // type : 'custom'
             },
         }) 
         let {data} = await http.topic.getNav() 
         this.navList = data.navList 
-        let  initData  = await http.topic.getInit()
-        this.initData = initData.data
-        console.log(initData)
+
+        // this.$nextTick(()=>{
+        //     this.scroll = new BScroll(this.$refs.scroll,{
+        //         // click: true
+        //     })
+        //     this.scroll.on('scrollEnd', () => {
+        //         // 滚动到底部
+        //         console.log("123")
+        //     })
+        // })
     },
 }
 </script>
@@ -130,12 +91,20 @@ export default {
 .topicContainer
     background #eee
     width 100%
-    overflow auto
+    // overflow auto
+    padding-bottom 88px
+    box-sizing border-box
+    position relative
     .topicHeader
         height 100px
         background #fff
         padding 0 26px
-        position relative
+        position fixed
+        top 0
+        left 0
+        z-index 9
+        width 100%
+        box-sizing border-box
         .left
             float left
             line-height 100px
@@ -156,6 +125,9 @@ export default {
                 margin-right 30px
     .swiperContainer
         position relative
+        height 685px
+        margin-top 100px
+        overflow hidden
         .swiper-title
             position relative
             z-index 1
@@ -173,71 +145,41 @@ export default {
                 top 90px
                 font-size 30px
                 color #fff
-        .swipertap
+        .tabWrap
             background #fff
             margin 0 20px
+            box-sizing border-box
+            border-radius 10px
+            padding-top 36px
+            overflow hidden
+            height 540px
+            width 710px
             position absolute
             top 150px
             z-index 2
-            width 710px
-            border-radius 10px
-            padding-top 36px
             display flex
-            overflow hidden
-            // flex-wrap wrap
-            .swiper-slide
-                flex 1
-                .img
-                    img 
-                        width 120px
-                        height 120px
-                        margin 0 24px
-                .detail
-                    display flex
-                    flex-direction column
-                    span
-                        font-size 24px
-                        text-align center
-    .water
-        padding-bottom 88px
-        .container-water-fall
-            .vue-waterfall
-                display flex
-                justify-content space-between
-                padding  30px 20px
-                box-sizing border-box
-                .cell-item
-                    width 48%
-                    .item
+            .swipertap
+                position absolute
+                top 0
+                z-index 2
+                display inline-flex
+                flex-direction column
+                flex-wrap wrap
+                height 100%
+                .swiperItem
+                    flex 1
+                    padding 36px 6px 6px
+                    .img
+                        img 
+                            width 120px
+                            height 120px
+                            margin 0 24px
+                    .detail
                         display flex
                         flex-direction column
-                        border-radius 12px
-                        overflow hidden
-                        .banner
-                            width  100%
-                        .item-body
-                            background #ffffff
-                            font-size 28px
-                            color #333
-                            padding 16px
-                            box-sizing border-box
-                            .desc
-                                display flex
-                                margin 17px auto 24px
-                                .avatar
-                                    width 48px
-                                    height 48px
-                                    border-radius 50%
-                                    vertical-align middle
-                                p
-                                    font-size 24px
-                                    color #7f7f7f
-                                    line-height 48px
-                                    margin-left 8px
-                                    vertical-align middle
-                            
-
-
+                        span
+                            font-size 24px
+                            text-align center
 
 
 
